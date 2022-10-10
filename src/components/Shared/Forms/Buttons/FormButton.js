@@ -12,6 +12,7 @@ export function FormButton({
   onClick,
   additionalClass,
   viewType,
+  disabled = false,
 }) {
   const componentClasses = classNames(
     [classes.btn, additionalClass].filter(Boolean),
@@ -21,7 +22,12 @@ export function FormButton({
   );
 
   return (
-    <button className={componentClasses} type={type} onClick={onClick}>
+    <button
+      disabled={disabled}
+      className={componentClasses}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
@@ -29,6 +35,7 @@ export function FormButton({
 
 FormButton.defaultProps = {
   type: 'button',
+  disabled: false,
 };
 
 FormButton.propTypes = {
@@ -40,4 +47,5 @@ FormButton.propTypes = {
   onClick: PropTypes.func,
   additionalClass: PropTypes.string,
   viewType: PropTypes.oneOf(Object.values(ViewTypes)),
+  disabled: PropTypes.bool,
 };
