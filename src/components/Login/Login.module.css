@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 10px;
+    height: 100%;
+}
+
+.logo {
+    --logo-size: 120px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--logo-size);
+    height: var(--logo-size);
+    padding: 10px;
+    background-color: #fff;
+    border: 3px solid #000;
+    border-radius: 50%;
+}
+
+.logoImg {
+    width: 80%;
+    max-width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 300px;
+    max-width: 450px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 9px 11px 8px 0 rgba(2, 2, 2, 0.22);
+}
+
+.formItem {
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 1.5em;
+}
+
+@media (min-width: 650px) {
+    .logo {
+        --logo-size: 150px;
+    }
+
+    .title {
+        font-size: 2em;
+    }
+}
+
+

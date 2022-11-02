@@ -1,23 +1,7 @@
-function App() {
-  function onSubmit(event) {
-    event.preventDefault();
-  }
+import { LoginContainer } from './containers/Login/LoginContainer';
 
-  return (
-    <section>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="login">
-          Enter your nickname
-          <input type="text" id="login" />
-        </label>
-        <label htmlFor="password">
-          Enter your password
-          <input type="password" id="password" />
-        </label>
-        <button type="submit">Sign in</button>
-      </form>
-    </section>
-  );
+function App() {
+  return <LoginContainer />;
 }
 
 export default App;
