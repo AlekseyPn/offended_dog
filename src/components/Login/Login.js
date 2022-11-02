@@ -6,34 +6,65 @@ import { FormButton } from '../Shared/Forms/Buttons/FormButton';
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export function Login({
-  onSubmit,
-  passwordError,
-  loginError,
-  resetErrors,
-  submitDisabled,
-}) {
+const LOGIN_MIN_LENGTH = 4;
+const PASSWORD_MIN_LENGTH = 6;
+
+export function Login({ onSubmit, submitError }) {
   const textInput = useRef(null);
-  const [login, setLogin] = useState();
-  const [password, setPassword] = useState();
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   function onLoginInput(event) {
-    setLogin(event.target.value);
-    if (loginError || passwordError) {
-      resetErrors();
+    const value = event.target.value;
+
+    setLogin(value);
+
+    if (value.length < LOGIN_MIN_LENGTH) {
+      setLoginError(`Login is invalid, minimum length is ${LOGIN_MIN_LENGTH}`);
+      return;
+    }
+
+    if (loginError) {
+      setLoginError('');
+    }
+
+    if (submitError) {
+      setPasswordError('');
     }
   }
 
   function onPasswordInput(event) {
-    setPassword(event.target.value);
-    if (loginError || passwordError) {
-      resetErrors();
+    const value = event.target.value;
+    setPassword(value);
+
+    if (value.length < PASSWORD_MIN_LENGTH) {
+      setPasswordError(
+        `Password is invalid, minimum length is ${PASSWORD_MIN_LENGTH}`
+      );
+      return;
+    }
+
+    if (passwordError) {
+      setPasswordError('');
+    }
+
+    if (submitError) {
+      setPasswordError('');
     }
   }
 
   useEffect(() => {
     textInput.current.focus();
   }, []);
+
+  useEffect(() => {
+    setSubmitDisabled(
+      !login || !password || !!loginError || !!passwordError || !!submitError
+    );
+  }, [loginError, passwordError, login, password, submitError]);
 
   return (
     <section className={classes.container}>
@@ -53,7 +84,8 @@ export function Login({
           type="text"
           value={login}
           onChange={onLoginInput}
-          error={loginError}
+          error={!!submitError}
+          errorText={loginError}
         />
         <FormInputPassword
           id="password"
@@ -61,7 +93,7 @@ export function Login({
           label="Enter your password"
           value={password}
           onChange={onPasswordInput}
-          error={passwordError}
+          errorText={passwordError || submitError}
         />
         <FormButton type="submit" disabled={submitDisabled}>
           Sign in
@@ -73,8 +105,5 @@ export function Login({
 
 Login.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  resetErrors: PropTypes.func,
-  loginError: PropTypes.string,
-  passwordError: PropTypes.string,
-  submitDisabled: PropTypes.bool,
+  submitError: PropTypes.string,
 };

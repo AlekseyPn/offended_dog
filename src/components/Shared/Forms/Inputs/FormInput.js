@@ -7,10 +7,11 @@ export const FormInput = React.forwardRef(function FormInput(
   {
     type,
     label,
-    onInput,
+    onChange,
     id,
     additionalClass,
     error,
+    errorText,
     value,
     children,
     disabled,
@@ -23,7 +24,7 @@ export const FormInput = React.forwardRef(function FormInput(
     classes.label,
     additionalClass,
     {
-      [classes.error]: !!error,
+      [classes.error]: !!error || !!errorText,
     },
   ]);
 
@@ -37,7 +38,7 @@ export const FormInput = React.forwardRef(function FormInput(
           ref={ref}
           type={inputType}
           id={id}
-          onInput={onInput}
+          onChange={onChange}
           className={classes.input}
           value={value}
           disabled={disabled}
@@ -48,7 +49,7 @@ export const FormInput = React.forwardRef(function FormInput(
       </div>
       {error && (
         <span id={errorId} className={classes.errorText}>
-          {error}
+          {errorText}
         </span>
       )}
     </label>
@@ -56,12 +57,13 @@ export const FormInput = React.forwardRef(function FormInput(
 });
 
 FormInput.propTypes = {
-  onInput: PropTypes.func,
+  onChange: PropTypes.func,
   type: PropTypes.string,
   label: PropTypes.string,
   id: PropTypes.string.isRequired,
   additionalClass: PropTypes.string,
-  error: PropTypes.string,
+  error: PropTypes.bool,
+  errorText: PropTypes.string,
   value: PropTypes.any.isRequired,
   disabled: PropTypes.bool,
   children: PropTypes.oneOfType([
