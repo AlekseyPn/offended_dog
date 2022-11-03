@@ -1,17 +1,14 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Login } from '../../components/Login/Login';
 
-export class LoginContainer extends Component {
-  state = {
-    submitError: '',
-  };
+export function LoginContainer() {
+  const { submitError, setSubmitError } = useState('');
 
-  onSubmit = (event, { login, password }) => {
+  function onSubmit(event, { login, password }) {
     event.preventDefault();
     console.log(login, password);
-  };
-
-  render() {
-    return <Login onSubmit={this.onSubmit} submitError={this.submitError} />;
+    setSubmitError('User with this email or password not found');
   }
+
+  return <Login onSubmit={onSubmit} submitError={submitError} />;
 }

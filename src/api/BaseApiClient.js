@@ -55,11 +55,22 @@ export class BaseApiClient {
     return set(this.getModelRef(`/${id}`), model);
   }
 
-  update(updates) {
-    return update(this.getModelRef(), updates);
+  update(values) {
+    if (!values) {
+      throw new Error('Values parameter is required');
+    }
+
+    if (Object.prototype.toString.call(values) !== '[object Object]') {
+      throw new Error('Values must be object');
+    }
+
+    return update(this.getModelRef(), values);
   }
 
   remove(id) {
+    if (!id) {
+      throw new Error('Id parameter is required');
+    }
     return remove(this.getModelRef(`/${id}`));
   }
 }
